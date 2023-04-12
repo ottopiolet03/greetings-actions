@@ -9,9 +9,9 @@ name: Simple Pipe
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "debug" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "debug" ]
   workflow_dispatch: 
     inputs:
       myValues:
@@ -41,6 +41,18 @@ jobs:
       with:
          name: greetings-jar
          path: build/libs
+  info:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Print warning message
+      run: |
+        echo "::warning::This version is for debugging only."
+    - name: Dump context for runner
+      env:
+        RUNNER_CONTEXT: ${{ toJSON(runner) }}
+      run: 
+        echo "::debug::Runner context is above."
   count-args:
     runs-on: ubuntu-latest
     steps:
